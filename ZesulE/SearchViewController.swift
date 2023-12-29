@@ -16,7 +16,6 @@ protocol DelegateProtocol {
 class SearchViewController: UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
-    
     @IBOutlet weak var tableView: UITableView!
     
     let db = Database.database().reference()
@@ -24,55 +23,54 @@ class SearchViewController: UIViewController {
     
     var userSearch: String = ""
     var dataArray: [String] = []
-  
     
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
-        
+        searchBar.placeholder = "도로명주소를 검색해주세요"
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
-    
-   
 }
 
 extension SearchViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
     // ⬇️ 서치바에 값이 바뀔 때마다 호출됨.
-       func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-           guard !searchText.isEmpty else {
-               dataArray.removeAll()
-               tableView.reloadData()
-               return
-           }
-
-           db.child("DATA").observeSingleEvent(of: .value) { [self] (snapshot) in
-               guard let data = snapshot.value as? [[String: Any]] else {
-                   print("Failed to fetch data from Firebase")
-                   return
-               }
-
-               // 검색어를 소문자로 변환하여 대소문자 구분 없이 검색할 수 있도록 함
-               let lowercaseSearchText = searchText.lowercased()
-               dataArray = []
-
-               for item in data {
-                   if let detlCn = item["detl_cn"] as? String {
-                       // detlCn 문자열에 검색어가 포함되어 있는지 확인
-                       if detlCn.lowercased().contains(lowercaseSearchText) {
-                           // 검색어가 포함된 데이터에 대한 처리
-                           // 예: 해당 데이터를 화면에 표시하거나 다른 작업을 수행
-                           dataArray.append(detlCn)
-                       }
-                   }
-               }
-               self.tableView.reloadData()
-           }
-       }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard !searchText.isEmpty else {
+            dataArray.removeAll()
+            tableView.reloadData()
+            return
+        }
+        
+        db.child("DATA").observeSingleEvent(of: .value) { [self] (snapshot) in
+            guard let data = snapshot.value as? [[String: Any]] else {
+                print("Failed to fetch data from Firebase")
+                return
+            }
+            // 검색어를 소문자로 변환하여 대소문자 구분 없이 검색할 수 있도록 함
+            let lowercaseSearchText = searchText.lowercased()
+            dataArray = []
+            
+            for item in data {
+                if let detlCn = item["detl_cn"] as? String {
+                    // detlCn 문자열에 검색어가 포함되어 있는지 확인
+                    if detlCn.lowercased().contains(lowercaseSearchText) {
+                        // 검색어가 포함된 데이터에 대한 처리
+                        // 예: 해당 데이터를 화면에 표시하거나 다른 작업을 수행
+                        dataArray.append(detlCn)
+                    }
+                }
+            }
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
     
 }
 
@@ -95,7 +93,6 @@ extension SearchViewController: UITableViewDataSource {
         delegate?.didSelectItem(selectedItem)
         navigationController?.popViewController(animated: true)
     }
-    
     
 }
 

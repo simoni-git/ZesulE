@@ -5,8 +5,7 @@
 //  Created by 시모니 on 12/28/23.
 //
 
-// 토요일에 해야할것: 현재상황은 검색창에 검색후 나오는 셀을 누르면 그 위도와경도로 가긴함, 하지만 내가 찾았던 데이터의 마킹이 뭔지모름, 그러므로 내가찾은데이터를통해서 화면이동해서왔다면 해당데이터를 갖고있는 마킹의 색깔을 노란색으로 바꿔야함. 그러면끝날듯.
-
+// 이미지 만들어서 넣어야할곳 1.앱아이콘 2.infoView이미지 3.탭바컨트롤러이미지 4.런치스크린이미지(런치시간3초정도 갖을것)
 
 
 import UIKit
@@ -19,11 +18,8 @@ class ViewController: UIViewController , DelegateProtocol {
     
     @IBOutlet weak var mapView: NMFMapView!
     @IBOutlet weak var imfoView: UIView!
-    
     @IBOutlet weak var searchBar: UISearchBar!
-    
     @IBOutlet weak var searchBtn: UIButton!
-    
     @IBOutlet weak var myLocationBtn: UIButton!
     
     @IBOutlet weak var boxLocationInfoLabel: UILabel!
@@ -34,8 +30,8 @@ class ViewController: UIViewController , DelegateProtocol {
     var locationManager: CLLocationManager!
     var currentCircle: NMFCircleOverlay?
     var selectedMarker: NMFMarker?
-    var searchMarker: NMFMarker?
-
+    var markers: [NMFMarker] = []  // 마커를 저장할 배열
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         makeMarking()
@@ -44,23 +40,22 @@ class ViewController: UIViewController , DelegateProtocol {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest // 정확도증가
         getLocationUsagePermission()
         configureUI()
-       
     }
     
-    func makeCircle(lat: Double , lng: Double) {
+   private func makeCircle(lat: Double , lng: Double) {
         if let existingCircle = currentCircle {
-                           existingCircle.mapView = nil
-                       }
+            existingCircle.mapView = nil
+        }
         
-                let circle = NMFCircleOverlay()
-                circle.center = NMGLatLng(lat: lat, lng: lng)
-                circle.radius = 500
-                circle.fillColor = UIColor.clear
-                circle.outlineWidth = 5
-                circle.outlineColor = UIColor.green
-                circle.mapView = mapView
+        let circle = NMFCircleOverlay()
+        circle.center = NMGLatLng(lat: lat, lng: lng)
+        circle.radius = 500
+        circle.fillColor = UIColor.clear
+        circle.outlineWidth = 5
+        circle.outlineColor = UIColor.yellow
+        circle.mapView = mapView
         
-                currentCircle = circle
+        currentCircle = circle
     }
     
     @IBAction func tapSearchBtn(_ sender: UIButton) {
@@ -70,8 +65,7 @@ class ViewController: UIViewController , DelegateProtocol {
         SearchVC.delegate = self
     }
     
-    
-    func configureUI() {
+   private func configureUI() {
         self.imfoView.layer.cornerRadius = 10
         self.myLocationBtn.layer.cornerRadius = 10
         self.searchBar.layer.cornerRadius = 10
@@ -87,20 +81,20 @@ class ViewController: UIViewController , DelegateProtocol {
             print("현재 위치: \(currentLocation.latitude), \(currentLocation.longitude)")
             let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentLocation.latitude, lng: currentLocation.longitude))
             mapView.moveCamera(cameraUpdate)
-        mapView.positionMode = .direction
+            mapView.positionMode = .direction
             makeCircle(lat: currentLocation.latitude, lng: currentLocation.longitude)
             
             self.boxLocationInfoLabel.text = "마커를 누르면 정보가 보여집니다."
             self.boxNumberLabel.text = "나침판 버튼을 누르면 현재 위치로 이동 합니다."
-            self.boxObseveName.text = "초록색 동그라미는 반경 500m 입니다."
+            self.boxObseveName.text = "노란색 동그라미는 반경 500m 입니다."
             
         } else {
             print("현재 위치를 가져올 수 없음")
         }
     }
     
-   private func makeMarking() {
-        db.child("DATA").observeSingleEvent(of: .value) { (snapshot) in
+    private func makeMarking() {
+        db.child("DATA").observeSingleEvent(of: .value) { [weak self] (snapshot) in
             guard let data = snapshot.value as? [[String: Any]] else {
                 print("Failed to fetch data from Firebase")
                 return
@@ -110,34 +104,36 @@ class ViewController: UIViewController , DelegateProtocol {
                    let longitudeString = item["Lng"] as? String,
                    latitudeString.lowercased() != "null", // "null"이 아닌 경우에만 처리
                    longitudeString.lowercased() != "null",
-                  let detlCn = item["detl_cn"] as? String,
+                   let detlCn = item["detl_cn"] as? String,
                    let mgcNm = item["mgc_nm"] as? String,
                    let sboxNum = item["sbox_num"] as? String,
-                    let latitude = Double(latitudeString),
+                   let latitude = Double(latitudeString),
                    let longitude = Double(longitudeString) {
                     // 위도 및 경도를 사용하여 마커 생성
                     let marker = NMFMarker()
                     marker.position = NMGLatLng(lat: latitude, lng: longitude)
+                    self?.markers.append(marker)
+                    print("마커갯수는 --> \(self!.markers.count)")
                     DispatchQueue.main.async {
-                        marker.mapView = self.mapView
+                        marker.mapView = self!.mapView
                     }
                     //마커를 눌렀을때 호출될 핸들러(마커누르면 해당데이터 뷰라벨에 표시)
                     marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
                         print("마커가 눌렸다!! 마커위치 --> \(marker.position)")
                         
                         if let prevSelectedMarker = self?.selectedMarker {
-                                   prevSelectedMarker.iconImage = NMF_MARKER_IMAGE_GREEN
-                               }
+                            prevSelectedMarker.iconImage = NMF_MARKER_IMAGE_GREEN
+                        }
                         // 선택된 마커의 이미지를 빨간색으로 변경
-                               marker.iconImage = NMF_MARKER_IMAGE_RED
-
-                               // 선택된 마커를 변수에 저장
-                               self?.selectedMarker = marker
-
-                            self?.boxLocationInfoLabel.text = "위치상세주소: \(detlCn)"
-                            self?.boxNumberLabel.text = "제설함 고유번호: \(sboxNum)"
-                            self?.boxObseveName.text = "관리구: \(mgcNm)청"
-                       
+                        marker.iconImage = NMF_MARKER_IMAGE_RED
+                        
+                        // 선택된 마커를 변수에 저장
+                        self?.selectedMarker = marker
+                        
+                        self?.boxLocationInfoLabel.text = "위치상세주소: \(detlCn)"
+                        self?.boxNumberLabel.text = "제설함 고유번호: \(sboxNum)"
+                        self?.boxObseveName.text = "관리구: \(mgcNm)청"
+                        
                         return true
                     }
                     
@@ -161,19 +157,30 @@ extension ViewController: NMFMapViewCameraDelegate {
             }
             
             if let matchingItem = data.first(where: { $0["detl_cn"] as? String == item }),
-                           let latitudeString = matchingItem["Lat"] as? String,
-                           let longitudeString = matchingItem["Lng"] as? String,
-                           let latitude = Double(latitudeString),
+               let latitudeString = matchingItem["Lat"] as? String,
+               let longitudeString = matchingItem["Lng"] as? String,
+               let detlCn = matchingItem["detl_cn"] as? String,
+               let mgcNm = matchingItem["mgc_nm"] as? String,
+               let sboxNum = matchingItem["sbox_num"] as? String,
+               let latitude = Double(latitudeString),
                let longitude = Double(longitudeString) {
+                self?.selectedMarker?.iconImage = NMF_MARKER_IMAGE_GREEN
                 
                 let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: latitude, lng: longitude))
                 DispatchQueue.main.async {
                     self?.mapView.moveCamera(cameraUpdate)
+                    self?.boxLocationInfoLabel.text = "위치상세주소: \(detlCn)"
+                    self?.boxNumberLabel.text = "제설함 고유번호: \(sboxNum)"
+                    self?.boxObseveName.text = "관리구: \(mgcNm)청"
                 }
+                if let marker = self?.markers.first(where: { $0.position.lat == latitude && $0.position.lng == longitude }) {
+                    marker.iconImage = NMF_MARKER_IMAGE_RED
+                    self?.selectedMarker = marker
+                }
+                
                 print("여기까지 넘어오긴하나??")
                 
             }
-          
         }
     }
     
@@ -182,26 +189,27 @@ extension ViewController: NMFMapViewCameraDelegate {
 extension ViewController: CLLocationManagerDelegate {
     
     func getLocationUsagePermission() {
-           self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.requestWhenInUseAuthorization()
         print("권한 물어보자")
-       }
-
+    }
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-            
-            switch status {
-            case .authorizedAlways, .authorizedWhenInUse:
-                print("GPS 권한 설정됨")
-                self.locationManager.startUpdatingLocation()
-            case .restricted, .notDetermined:
-                print("GPS 권한 설정되지 않음")
-                getLocationUsagePermission()
-            case .denied:
-                print("GPS 권한 요청 거부됨")
-                getLocationUsagePermission()
-            default:
-                print("GPS: Default")
-            }
+        
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            print("GPS 권한 설정됨")
+            self.locationManager.startUpdatingLocation()
+        case .restricted, .notDetermined:
+            print("GPS 권한 설정되지 않음")
+            getLocationUsagePermission()
+        case .denied:
+            print("GPS 권한 요청 거부됨")
+            getLocationUsagePermission()
+        default:
+            print("GPS: Default")
         }
+    }
+    
 }
 
 

@@ -10,7 +10,6 @@ import UIKit
 class CallViewController: UIViewController {
     
     var vm: CallViewModel!
-    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -43,7 +42,6 @@ extension CallViewController: UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    
 }
 
 extension CallViewController: UITableViewDelegate {
@@ -51,6 +49,7 @@ extension CallViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
+    
 }
 
 

@@ -120,7 +120,7 @@
             </objects>
             <point key="canvasLocation" x="962.59541984732823" y="407.74647887323948"/>
         </scene>
-        <!--Item-->
+        <!--위치검색-->
         <scene sceneID="fg1-W9-Hxd">
             <objects>
                 <viewController storyboardIdentifier="ViewController" id="if1-bG-CZj" customClass="ViewController" customModule="ZesulE" customModuleProvider="target" sceneMemberID="viewController">
@@ -175,7 +175,7 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="초록색 동그라미는 반경 500m 입니다." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wfd-Bb-5KT">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="노란색 동그라미는 반경 500m 입니다." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wfd-Bb-5KT">
                                         <rect key="frame" x="5" y="102" width="323" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -233,7 +233,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="HA9-C6-dQz"/>
-                    <navigationItem key="navigationItem" id="VgE-ph-ZtF"/>
+                    <navigationItem key="navigationItem" title="위치검색" id="VgE-ph-ZtF"/>
                     <connections>
                         <outlet property="boxLocationInfoLabel" destination="XaE-Od-Woj" id="xZQ-Gu-WVg"/>
                         <outlet property="boxNumberLabel" destination="9os-2i-5DV" id="Ofm-g9-pHT"/>
@@ -265,7 +265,7 @@
                                 </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tO2-DH-EFw">
-                                <rect key="frame" x="0.0" y="163" width="393" height="655"/>
+                                <rect key="frame" x="0.0" y="179" width="393" height="639"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchCell" rowHeight="70" id="81d-8S-2yl" customClass="SearchCell" customModule="ZesulE" customModuleProvider="target">
@@ -293,17 +293,38 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0uN-rj-aoF">
+                                <rect key="frame" x="0.0" y="139" width="393" height="40"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="검색 후 주소를 터치하면 해당 주소로 이동합니다.  (단 위치정보가 없을 경우 지도에 표기되지 않습니다.)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jbn-71-4eO">
+                                        <rect key="frame" x="3" y="3" width="387" height="33.666666666666664"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemPinkColor"/>
+                                <constraints>
+                                    <constraint firstItem="Jbn-71-4eO" firstAttribute="leading" secondItem="0uN-rj-aoF" secondAttribute="leading" constant="3" id="6p1-pm-F6f"/>
+                                    <constraint firstAttribute="trailing" secondItem="Jbn-71-4eO" secondAttribute="trailing" constant="3" id="AVx-SW-pIf"/>
+                                    <constraint firstAttribute="height" constant="40" id="NHU-ka-cHp"/>
+                                    <constraint firstItem="Jbn-71-4eO" firstAttribute="top" secondItem="0uN-rj-aoF" secondAttribute="top" constant="3" id="s37-HN-p4V"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6V0-Gk-gw2"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="tO2-DH-EFw" firstAttribute="top" secondItem="0uN-rj-aoF" secondAttribute="bottom" id="78I-Bc-ldU"/>
                             <constraint firstItem="xoC-y8-h6i" firstAttribute="leading" secondItem="6V0-Gk-gw2" secondAttribute="leading" id="8PN-eo-fER"/>
                             <constraint firstItem="6V0-Gk-gw2" firstAttribute="bottom" secondItem="tO2-DH-EFw" secondAttribute="bottom" id="B5v-fH-ySJ"/>
                             <constraint firstItem="xoC-y8-h6i" firstAttribute="trailing" secondItem="6V0-Gk-gw2" secondAttribute="trailing" id="NNj-KK-cNQ"/>
+                            <constraint firstItem="6V0-Gk-gw2" firstAttribute="trailing" secondItem="0uN-rj-aoF" secondAttribute="trailing" id="Ngs-Wd-k4h"/>
                             <constraint firstItem="xoC-y8-h6i" firstAttribute="top" secondItem="6V0-Gk-gw2" secondAttribute="top" constant="24" id="Qt1-gu-fpi"/>
+                            <constraint firstItem="0uN-rj-aoF" firstAttribute="leading" secondItem="6V0-Gk-gw2" secondAttribute="leading" id="aNi-0P-PG4"/>
                             <constraint firstItem="tO2-DH-EFw" firstAttribute="leading" secondItem="6V0-Gk-gw2" secondAttribute="leading" id="cQZ-oU-Zpa"/>
                             <constraint firstItem="6V0-Gk-gw2" firstAttribute="trailing" secondItem="tO2-DH-EFw" secondAttribute="trailing" id="nrk-va-MBM"/>
-                            <constraint firstItem="tO2-DH-EFw" firstAttribute="top" secondItem="xoC-y8-h6i" secondAttribute="bottom" constant="24" id="zGn-2x-rhS"/>
+                            <constraint firstItem="0uN-rj-aoF" firstAttribute="top" secondItem="xoC-y8-h6i" secondAttribute="bottom" id="rjT-FK-sgX"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="iY2-XB-DwR"/>
@@ -324,7 +345,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBrownColor">
-            <color red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
