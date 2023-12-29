@@ -5,16 +5,25 @@
 //  Created by 시모니 on 12/28/23.
 //
 
+// 토요일에 해야할것: 현재상황은 검색창에 검색후 나오는 셀을 누르면 그 위도와경도로 가긴함, 하지만 내가 찾았던 데이터의 마킹이 뭔지모름, 그러므로 내가찾은데이터를통해서 화면이동해서왔다면 해당데이터를 갖고있는 마킹의 색깔을 노란색으로 바꿔야함. 그러면끝날듯.
+
+
+
 import UIKit
 import Firebase
 import NMapsMap
 import CoreLocation
 import FirebaseDatabaseInternal
 
-class ViewController: UIViewController {
+class ViewController: UIViewController , DelegateProtocol {
     
     @IBOutlet weak var mapView: NMFMapView!
     @IBOutlet weak var imfoView: UIView!
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    @IBOutlet weak var searchBtn: UIButton!
+    
     @IBOutlet weak var myLocationBtn: UIButton!
     
     @IBOutlet weak var boxLocationInfoLabel: UILabel!
@@ -25,6 +34,7 @@ class ViewController: UIViewController {
     var locationManager: CLLocationManager!
     var currentCircle: NMFCircleOverlay?
     var selectedMarker: NMFMarker?
+    var searchMarker: NMFMarker?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,9 +63,22 @@ class ViewController: UIViewController {
                 currentCircle = circle
     }
     
+    @IBAction func tapSearchBtn(_ sender: UIButton) {
+        print("까꿍 내가눌렸지!")
+        guard let SearchVC = self.storyboard!.instantiateViewController(identifier: "SearchViewController") as? SearchViewController else {return}
+        self.navigationController?.pushViewController(SearchVC, animated: true)
+        SearchVC.delegate = self
+    }
+    
+    
     func configureUI() {
         self.imfoView.layer.cornerRadius = 10
         self.myLocationBtn.layer.cornerRadius = 10
+        self.searchBar.layer.cornerRadius = 10
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     //⬇️내 현위치로 이동
     @IBAction func tapMyLocationBtn(_ sender: UIButton) {
@@ -113,7 +136,7 @@ class ViewController: UIViewController {
 
                             self?.boxLocationInfoLabel.text = "위치상세주소: \(detlCn)"
                             self?.boxNumberLabel.text = "제설함 고유번호: \(sboxNum)"
-                            self?.boxObseveName.text = "관리구: \(mgcNm)"
+                            self?.boxObseveName.text = "관리구: \(mgcNm)청"
                        
                         return true
                     }
@@ -122,6 +145,35 @@ class ViewController: UIViewController {
                     print("Invalid or missing latitude/longitude data in item: \(item)")
                 }
             }
+        }
+    }
+    
+}
+
+extension ViewController: NMFMapViewCameraDelegate {
+    //⬇️ SearchVC 에서 넘어온 정보를 토대로 좌표로 이동.
+    func didSelectItem(_ item: String) {
+        print("이거 실행은된다?")
+        db.child("DATA").observeSingleEvent(of: .value) {[weak self] (snapshot) in
+            guard let data = snapshot.value as? [[String: Any]] else {
+                print("Failed to fetch data from Firebase")
+                return
+            }
+            
+            if let matchingItem = data.first(where: { $0["detl_cn"] as? String == item }),
+                           let latitudeString = matchingItem["Lat"] as? String,
+                           let longitudeString = matchingItem["Lng"] as? String,
+                           let latitude = Double(latitudeString),
+               let longitude = Double(longitudeString) {
+                
+                let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: latitude, lng: longitude))
+                DispatchQueue.main.async {
+                    self?.mapView.moveCamera(cameraUpdate)
+                }
+                print("여기까지 넘어오긴하나??")
+                
+            }
+          
         }
     }
     
