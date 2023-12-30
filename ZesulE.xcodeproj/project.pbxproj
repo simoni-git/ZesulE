@@ -360,6 +360,7 @@
 				DEVELOPMENT_TEAM = C228F79P72;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ZesulE/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "제설이";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -389,6 +390,7 @@
 				DEVELOPMENT_TEAM = C228F79P72;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ZesulE/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "제설이";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

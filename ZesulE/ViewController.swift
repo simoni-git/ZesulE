@@ -40,6 +40,7 @@ class ViewController: UIViewController , DelegateProtocol {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest // 정확도증가
         getLocationUsagePermission()
         configureUI()
+        startLocationIsUserLocation()
     }
     
    private func makeCircle(lat: Double , lng: Double) {
@@ -93,6 +94,24 @@ class ViewController: UIViewController , DelegateProtocol {
         }
     }
     
+    private func startLocationIsUserLocation() {
+        print("우선 시작지점은 사용자의 위치권한이 허용됬으니 사용자위치로 바로이동")
+        if let currentLocation = locationManager.location?.coordinate {
+            print("현재 위치: \(currentLocation.latitude), \(currentLocation.longitude)")
+            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: currentLocation.latitude, lng: currentLocation.longitude))
+            mapView.moveCamera(cameraUpdate)
+            mapView.positionMode = .direction
+            makeCircle(lat: currentLocation.latitude, lng: currentLocation.longitude)
+            
+            self.boxLocationInfoLabel.text = "마커를 누르면 정보가 보여집니다."
+            self.boxNumberLabel.text = "나침판 버튼을 누르면 현재 위치로 이동 합니다."
+            self.boxObseveName.text = "노란색 동그라미는 반경 500m 입니다."
+            
+        } else {
+            print("현재 위치를 가져올 수 없음")
+        }
+    }
+    
     private func makeMarking() {
         db.child("DATA").observeSingleEvent(of: .value) { [weak self] (snapshot) in
             guard let data = snapshot.value as? [[String: Any]] else {
@@ -100,16 +119,13 @@ class ViewController: UIViewController , DelegateProtocol {
                 return
             }
             for item in data {
-                if let latitudeString = item["Lat"] as? String,
-                   let longitudeString = item["Lng"] as? String,
-                   latitudeString.lowercased() != "null", // "null"이 아닌 경우에만 처리
-                   longitudeString.lowercased() != "null",
+            
+                if let latitude = item["lat"] as? Double,
+                   let longitude = item["lng"] as? Double,
                    let detlCn = item["detl_cn"] as? String,
                    let mgcNm = item["mgc_nm"] as? String,
-                   let sboxNum = item["sbox_num"] as? String,
-                   let latitude = Double(latitudeString),
-                   let longitude = Double(longitudeString) {
-                    // 위도 및 경도를 사용하여 마커 생성
+                   let sboxNum = item["sbox_num"] as? String {
+
                     let marker = NMFMarker()
                     marker.position = NMGLatLng(lat: latitude, lng: longitude)
                     self?.markers.append(marker)
@@ -157,13 +173,12 @@ extension ViewController: NMFMapViewCameraDelegate {
             }
             
             if let matchingItem = data.first(where: { $0["detl_cn"] as? String == item }),
-               let latitudeString = matchingItem["Lat"] as? String,
-               let longitudeString = matchingItem["Lng"] as? String,
+               let latitude = matchingItem["lat"] as? Double,
+               let longitude = matchingItem["lng"] as? Double,
                let detlCn = matchingItem["detl_cn"] as? String,
                let mgcNm = matchingItem["mgc_nm"] as? String,
-               let sboxNum = matchingItem["sbox_num"] as? String,
-               let latitude = Double(latitudeString),
-               let longitude = Double(longitudeString) {
+               let sboxNum = matchingItem["sbox_num"] as? String {
+                
                 self?.selectedMarker?.iconImage = NMF_MARKER_IMAGE_GREEN
                 
                 let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: latitude, lng: longitude))
