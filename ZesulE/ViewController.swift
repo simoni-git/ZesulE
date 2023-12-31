@@ -17,7 +17,9 @@ import FirebaseDatabaseInternal
 class ViewController: UIViewController , DelegateProtocol {
     
     @IBOutlet weak var mapView: NMFMapView!
-    @IBOutlet weak var imfoView: UIView!
+    @IBOutlet weak var imfoView:
+    UIView!
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var myLocationBtn: UIButton!
@@ -53,7 +55,7 @@ class ViewController: UIViewController , DelegateProtocol {
         circle.radius = 500
         circle.fillColor = UIColor.clear
         circle.outlineWidth = 5
-        circle.outlineColor = UIColor.yellow
+        circle.outlineColor = UIColor.orange
         circle.mapView = mapView
         
         currentCircle = circle
@@ -70,6 +72,7 @@ class ViewController: UIViewController , DelegateProtocol {
         self.imfoView.layer.cornerRadius = 10
         self.myLocationBtn.layer.cornerRadius = 10
         self.searchBar.layer.cornerRadius = 10
+       
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -87,7 +90,7 @@ class ViewController: UIViewController , DelegateProtocol {
             
             self.boxLocationInfoLabel.text = "마커를 누르면 정보가 보여집니다."
             self.boxNumberLabel.text = "나침판 버튼을 누르면 현재 위치로 이동 합니다."
-            self.boxObseveName.text = "노란색 동그라미는 반경 500m 입니다."
+            self.boxObseveName.text = "주황색 동그라미는 반경 500m 입니다."
             
         } else {
             print("현재 위치를 가져올 수 없음")
@@ -105,7 +108,7 @@ class ViewController: UIViewController , DelegateProtocol {
             
             self.boxLocationInfoLabel.text = "마커를 누르면 정보가 보여집니다."
             self.boxNumberLabel.text = "나침판 버튼을 누르면 현재 위치로 이동 합니다."
-            self.boxObseveName.text = "노란색 동그라미는 반경 500m 입니다."
+            self.boxObseveName.text = "주황색 동그라미는 반경 500m 입니다."
             
         } else {
             print("현재 위치를 가져올 수 없음")

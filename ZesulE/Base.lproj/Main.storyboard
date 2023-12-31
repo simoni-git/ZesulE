@@ -17,6 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" systemColor="systemOrangeColor"/>
                     </tabBar>
                     <connections>
                         <segue destination="if1-bG-CZj" kind="relationship" relationship="viewControllers" id="7Pa-Zf-sBs"/>
@@ -43,7 +44,7 @@
             </objects>
             <point key="canvasLocation" x="27" y="-1004"/>
         </scene>
-        <!--Item-->
+        <!--Call View Controller-->
         <scene sceneID="bA7-ym-gu5">
             <objects>
                 <viewController storyboardIdentifier="CallViewController" id="Ljf-f0-8zh" customClass="CallViewController" customModule="ZesulE" customModuleProvider="target" sceneMemberID="viewController">
@@ -110,7 +111,7 @@
                             <constraint firstItem="Yhk-IF-hjS" firstAttribute="top" secondItem="hIx-QJ-fgC" secondAttribute="bottom" constant="10" id="qRm-mr-cek"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="985-De-MdO"/>
+                    <tabBarItem key="tabBarItem" title="" image="phone.bubble.fill.rtl" catalog="system" id="985-De-MdO"/>
                     <navigationItem key="navigationItem" id="Ycq-h1-lKk"/>
                     <connections>
                         <outlet property="tableView" destination="Yhk-IF-hjS" id="4ip-as-YmO"/>
@@ -147,7 +148,7 @@
                                     <constraint firstAttribute="width" constant="30" id="0rM-oP-iok"/>
                                     <constraint firstAttribute="height" constant="30" id="Fkx-C2-uHq"/>
                                 </constraints>
-                                <color key="tintColor" systemColor="systemBrownColor"/>
+                                <color key="tintColor" systemColor="systemOrangeColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" image="safari.fill" catalog="system"/>
                                 <connections>
@@ -157,8 +158,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gOG-GR-cBI">
                                 <rect key="frame" x="30" y="589" width="333" height="150"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="snowflake.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="yWB-64-22P">
-                                        <rect key="frame" x="5" y="5.9999999999999982" width="30" height="28.666666666666664"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zesule" translatesAutoresizingMaskIntoConstraints="NO" id="yWB-64-22P">
+                                        <rect key="frame" x="5" y="5" width="30" height="30"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="VST-ed-tmO"/>
@@ -234,7 +235,7 @@
                             <constraint firstItem="M08-4V-9eP" firstAttribute="trailing" secondItem="1rg-28-F7U" secondAttribute="trailing" constant="24" id="uFV-u0-C3X"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="HA9-C6-dQz"/>
+                    <tabBarItem key="tabBarItem" title="" image="archivebox.fill" catalog="system" id="HA9-C6-dQz"/>
                     <navigationItem key="navigationItem" title="위치검색" id="VgE-ph-ZtF"/>
                     <connections>
                         <outlet property="boxLocationInfoLabel" destination="XaE-Od-Woj" id="xZQ-Gu-WVg"/>
@@ -341,13 +342,15 @@
         </scene>
     </scenes>
     <resources>
+        <image name="archivebox.fill" catalog="system" width="128" height="107"/>
+        <image name="phone.bubble.fill.rtl" catalog="system" width="128" height="110"/>
         <image name="safari.fill" catalog="system" width="128" height="123"/>
-        <image name="snowflake.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="zesule" width="419" height="287"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemBrownColor">
-            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPinkColor">
             <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
