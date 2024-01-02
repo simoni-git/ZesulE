@@ -31,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E427AC102B4394E700385A2F /* ZesulE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZesulE.entitlements; sourceTree = "<group>"; };
 		E4AD71E12B3ECDE100A2CFE5 /* CallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewController.swift; sourceTree = "<group>"; };
 		E4AD71E32B3ECE9400A2CFE5 /* CallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewModel.swift; sourceTree = "<group>"; };
 		E4AD71E52B3ECFC100A2CFE5 /* CallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCell.swift; sourceTree = "<group>"; };
@@ -87,6 +88,7 @@
 		E4B6CADA2B3D2E3900DC6F2F /* ZesulE */ = {
 			isa = PBXGroup;
 			children = (
+				E427AC102B4394E700385A2F /* ZesulE.entitlements */,
 				E4B6CADB2B3D2E3900DC6F2F /* AppDelegate.swift */,
 				E4B6CADD2B3D2E3900DC6F2F /* SceneDelegate.swift */,
 				E4B6CADF2B3D2E3900DC6F2F /* ViewController.swift */,
@@ -355,6 +357,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ZesulE/ZesulE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = C228F79P72;
@@ -374,9 +377,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Simoni.ZesulE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -385,6 +391,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ZesulE/ZesulE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = C228F79P72;
@@ -404,9 +411,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Simoni.ZesulE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         NMFAuthManager.shared().clientId = "wz4h8i23k6"
+        sleep(3)
         return true
     }
 
