@@ -2,8 +2,8 @@
 
 > **서울시 제설함을 한눈에 찾는 가장 쉬운 방법**
 <p align="center">
-  <img src="screenshots/KakaoTalk_Photo_2024-02-19-02-27-17%20004.png" width="350">
-  <img src="screenshots/KakaoTalk_Photo_2024-02-19-02-27-18%20005.png" width="350">
+  <img src="screenshots/main.png" width="350">
+  <img src="screenshots/search.png" width="350">
 </p>
 ## 📖 프로젝트 소개
 
