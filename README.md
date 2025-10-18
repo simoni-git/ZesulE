@@ -33,7 +33,7 @@
 ### **Frameworks & Languages**
 - **Swift** - iOS 네이티브 개발
 - **SwiftUI** - 선언형 UI 구현
-- **MVC Architecture** - 코드 구조화
+- **MVVM Architecture** - 코드 구조화
 
 ### **External Libraries & SDKs**
 - **Naver Maps SDK** - 지도 표시 및 마커 렌더링
