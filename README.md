@@ -71,56 +71,6 @@
 
 ---
 
-## 🚀 Getting Started
-
-### Requirements
-- iOS 14.0+
-- Xcode 13.0+
-- Swift 5.0+
-
-### Installation
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/simoni-git/ZesulE.git
-cd ZesulE
-```
-
-2. **Install dependencies**
-```bash
-# SPM을 통해 자동으로 설치됩니다
-```
-
-3. **Naver Maps SDK API Key 설정**
-```swift
-// AppDelegate.swift 또는 설정 파일에서
-NMFAuthManager.shared().clientId = "YOUR_NAVER_CLIENT_ID"
-```
-
-4. **Firebase 설정**
-- Firebase Console에서 프로젝트 생성
-- `GoogleService-Info.plist` 다운로드 후 프로젝트에 추가
-
-5. **Run the project**
-```bash
-open ZesulE.xcodeproj
-```
-
----
-
-## 📂 Project Structure
-
-```
-ZesulE/
-├── Models/          # 데이터 모델 (제설함 정보)
-├── Views/           # SwiftUI View 컴포넌트
-├── ViewModels/      # 비즈니스 로직
-├── Services/        # Firebase, 네트워크 통신
-└── Resources/       # Assets, 데이터 파일
-```
-
----
-
 ## 💭 회고 (Retrospective)
 
 ### 잘한 점 ✅
@@ -153,7 +103,3 @@ ZesulE/
 - 📝 Blog: [네이버 블로그](https://blog.naver.com/gms5889)
 
 ---
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
